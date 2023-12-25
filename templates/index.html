@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/main.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <title>Cat or not?</title>
+</head>
+<body>
+    <h1>Is your image a cat?</h1>
+
+<!--    &lt;!&ndash; Create a button that redirects to the /another_route route &ndash;&gt;-->
+<!--    <form action="{{ url_for('another_route') }}" method="get">-->
+<!--        <button type="submit">Go to Another Route</button>-->
+<!--    </form>-->
+    <div class="center_gif">
+        <img src="https://i.gifer.com/2ull.gif">
+    </div>
+
+    <!-- Create a form for image upload -->
+    <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        <div class="file-input-container">
+            <label for="file" class="custom-button">Choose Image</label>
+            <input type="file" name="file" id="file" class="file-input" accept="image/*">
+        </div>
+        <div id="image-preview">
+            <img id="selected-image" src="" alt="Selected Image">
+        </div>
+        <button type="submit" class="custom-button">Upload</button>
+    </form>
+
+<script>
+    // Function to handle image selection
+    function handleImageSelect(event) {
+        const input = event.target;
+        const preview = document.getElementById('selected-image');
+
+        const file = input.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Set the source of the image to the selected file
+                preview.src = e.target.result;
+            };
+
+            // Read the file as a data URL
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Attach the function to the change event of the file input
+    document.getElementById('file').addEventListener('change', handleImageSelect);
+</script>
+
+</body>
+</html>
