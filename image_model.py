@@ -14,14 +14,14 @@ train_datagen = ImageDataGenerator(
         horizontal_flip=True)
 
 training_set = train_datagen.flow_from_directory(
-        r'dataset\dataset\training_set',
+        r'dataset\training_set',
         target_size=(64,64),
         batch_size=32,
         class_mode='binary')
 
 test_datagen = ImageDataGenerator(rescale=1./255)
 test_set = test_datagen.flow_from_directory(
-        r'dataset\dataset\test_set',
+        r'dataset\test_set',
         target_size=(64,64),
         batch_size=32,
         class_mode='binary')
@@ -45,14 +45,6 @@ cnn.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accura
 
 cnn.fit(x=training_set,validation_data=test_set,epochs=25)
 
-#prediction
+cnn.save('image_model.h5')
 
-test_image = image.load_img( r'C:\Users\Bozo\Downloads\dataset\dataset\test_image_ct.jpg',target_size=(64,64))
-test_image = image.img_to_array(test_image)
-test_image = np.expand_dims(test_image, axis=0,)
-result = cnn.predict(test_image)
 
-if result[0][0]==0:
-    prediction='Cat'
-else:
-    prediction='Something else'
